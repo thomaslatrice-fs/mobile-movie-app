@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Reel Notes",
+    "slug": "reel-notes-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#fefae0",
+    "splash": {
+      "backgroundColor": "#283618"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#fefae0"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
