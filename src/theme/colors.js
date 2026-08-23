@@ -6,6 +6,11 @@ export const colors = {
   oliveSoft: "#606c38",
   white: "#ffffff",
   danger: "#b3541e",
+  // Brighter accents layered on top of the earthy base — used for the FAB,
+  // genre pills, and other spots that should pop a bit more.
+  gold: "#f2b705",
+  coral: "#f4845f",
+  sunset: "#ee6c4d",
 };
 
 export const spacing = {
