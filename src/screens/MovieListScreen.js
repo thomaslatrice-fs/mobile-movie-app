@@ -4,23 +4,25 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
+  RefreshControl,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { getMovies, deleteMovie } from "../api/movies";
 import MovieCard from "../components/MovieCard";
+import AnimatedFab from "../components/AnimatedFab";
 import { colors, spacing, radii } from "../theme/colors";
 
 export default function MovieListScreen({ navigation }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
 
-  const fetchMovies = useCallback(async () => {
+  const fetchMovies = useCallback(async ({ silent } = {}) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       const res = await getMovies();
       setMovies(res.data.data);
       setError("");
@@ -28,6 +30,7 @@ export default function MovieListScreen({ navigation }) {
       setError("Couldn't load your movie collection. Is the API running?");
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   }, []);
 
@@ -35,8 +38,13 @@ export default function MovieListScreen({ navigation }) {
   useFocusEffect(
     useCallback(() => {
       fetchMovies();
-    }, [fetchMovies])
+    }, [fetchMovies]),
   );
+
+  function handleRefresh() {
+    setRefreshing(true);
+    fetchMovies({ silent: true });
+  }
 
   function handleDelete(id) {
     Alert.alert("Remove movie?", "This will remove it from your collection.", [
@@ -60,20 +68,37 @@ export default function MovieListScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>My Collection</Text>
-        <Text style={styles.subtitle}>Every film worth remembering, in one place.</Text>
+        <Text style={styles.subtitle}>
+          Every film worth remembering, in one place. 🎬
+        </Text>
       </View>
 
       {loading ? (
-        <ActivityIndicator color={colors.olive} style={{ marginTop: spacing.lg }} />
+        <ActivityIndicator
+          color={colors.burgundy}
+          style={{ marginTop: spacing.lg }}
+        />
       ) : error ? (
         <Text style={styles.errorText}>{error}</Text>
       ) : movies.length === 0 ? (
-        <Text style={styles.emptyText}>No movies yet — tap "Add Movie" to start your collection.</Text>
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyEmoji}>🍿</Text>
+          <Text style={styles.emptyText}>
+            No movies yet — tap "Add Movie" to start your collection!
+          </Text>
+        </View>
       ) : (
         <FlatList
           data={movies}
           keyExtractor={(item) => item._id}
           contentContainerStyle={{ paddingBottom: spacing.xl }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              tintColor={colors.burgundy}
+            />
+          }
           renderItem={({ item }) => (
             <MovieCard
               movie={item}
@@ -84,9 +109,10 @@ export default function MovieListScreen({ navigation }) {
         />
       )}
 
-      <TouchableOpacity style={styles.fab} onPress={() => navigation.navigate("AddMovie")}>
-        <Text style={styles.fabText}>+ Add Movie</Text>
-      </TouchableOpacity>
+      <AnimatedFab
+        label="🎞️ Add Movie"
+        onPress={() => navigation.navigate("AddMovie")}
+      />
     </View>
   );
 }
@@ -103,34 +129,30 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "800",
-    color: colors.olive,
+    color: colors.burgundyDeep,
   },
   subtitle: {
-    color: colors.oliveSoft,
+    color: colors.mutedText,
     marginTop: 2,
   },
   errorText: {
     color: colors.danger,
     marginTop: spacing.md,
   },
-  emptyText: {
-    color: colors.oliveSoft,
+  emptyState: {
     backgroundColor: colors.white,
     borderRadius: radii.md,
-    padding: spacing.lg,
-    textAlign: "center",
+    padding: spacing.xl,
+    alignItems: "center",
     marginTop: spacing.md,
   },
-  fab: {
-    backgroundColor: colors.olive,
-    borderRadius: radii.pill,
-    paddingVertical: 14,
-    alignItems: "center",
-    marginTop: spacing.sm,
+  emptyEmoji: {
+    fontSize: 40,
+    marginBottom: spacing.sm,
   },
-  fabText: {
-    color: colors.cream,
-    fontWeight: "700",
-    fontSize: 15,
+  emptyText: {
+    color: colors.burgundy,
+    textAlign: "center",
+    fontWeight: "600",
   },
 });

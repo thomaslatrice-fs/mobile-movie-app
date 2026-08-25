@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "800",
-    color: colors.olive,
+    color: colors.burgundyDeep,
     marginBottom: 2,
   },
   subtitle: {
-    color: colors.oliveSoft,
+    color: colors.mutedText,
     marginBottom: spacing.md,
   },
 });

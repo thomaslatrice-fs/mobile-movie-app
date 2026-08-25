@@ -1,16 +1,13 @@
 export const colors = {
-  cream: "#fefae0",
-  sage: "#ccd5ae",
-  terracotta: "#d4a373",
-  olive: "#283618",
-  oliveSoft: "#606c38",
+  cream: "#faf3e7",
+  burgundy: "#6b1d2b",
+  burgundyDeep: "#4a1420",
+  gold: "#c9a227",
+  goldLight: "#e8c766",
   white: "#ffffff",
-  danger: "#b3541e",
-  // Brighter accents layered on top of the earthy base — used for the FAB,
-  // genre pills, and other spots that should pop a bit more.
-  gold: "#f2b705",
-  coral: "#f4845f",
-  sunset: "#ee6c4d",
+  danger: "#a13b2a",
+  ink: "#2b1512",
+  mutedText: "#8a7568",
 };
 
 export const spacing = {

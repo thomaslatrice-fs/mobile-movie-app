@@ -12,9 +12,10 @@ export default function AppNavigator() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: colors.olive },
-          headerTintColor: colors.cream,
-          headerTitleStyle: { fontWeight: "700" },
+          headerStyle: { backgroundColor: colors.burgundy },
+          headerTintColor: colors.goldLight,
+          headerTitleStyle: { fontWeight: "800" },
+          headerShadowVisible: false,
           contentStyle: { backgroundColor: colors.cream },
         }}
       >
@@ -23,8 +24,16 @@ export default function AppNavigator() {
           component={MovieListScreen}
           options={{ title: "🎬 Reel Notes" }}
         />
-        <Stack.Screen name="AddMovie" component={AddMovieScreen} options={{ title: "Add Movie" }} />
-        <Stack.Screen name="EditMovie" component={EditMovieScreen} options={{ title: "Edit Movie" }} />
+        <Stack.Screen
+          name="AddMovie"
+          component={AddMovieScreen}
+          options={{ title: "Add Movie" }}
+        />
+        <Stack.Screen
+          name="EditMovie"
+          component={EditMovieScreen}
+          options={{ title: "Edit Movie" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -15,7 +15,11 @@ export default function EditMovieScreen({ route, navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Edit Movie</Text>
       <Text style={styles.subtitle}>Update the details for this title.</Text>
-      <MovieForm initialData={movie} onSubmit={handleUpdate} submitLabel="Save Changes" />
+      <MovieForm
+        initialData={movie}
+        onSubmit={handleUpdate}
+        submitLabel="Save Changes"
+      />
     </View>
   );
 }
@@ -29,11 +33,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "800",
-    color: colors.olive,
+    color: colors.burgundyDeep,
     marginBottom: 2,
   },
   subtitle: {
-    color: colors.oliveSoft,
+    color: colors.mutedText,
     marginBottom: spacing.md,
   },
 });
